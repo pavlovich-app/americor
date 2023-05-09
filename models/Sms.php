@@ -10,6 +10,7 @@ use yii\db\ActiveRecord;
  * This is the model class for table "{{%sms}}".
  *
  * @property integer $id
+ * @property integer $history_id
  * @property integer $user_id
  * @property integer $customer_id
  * @property integer $status
@@ -60,13 +61,14 @@ class Sms extends ActiveRecord
     public function rules()
     {
         return [
-            [['phone_to', 'direction'], 'required'],
-            [['user_id', 'customer_id', 'status', 'direction', 'applicant_id', 'type'], 'integer'],
+            [['phone_to', 'direction', 'history_id'], 'required'],
+            [['user_id', 'customer_id', 'status', 'direction', 'applicant_id', 'type', 'history_id'], 'integer'],
             [['message'], 'string'],
             [['ins_ts'], 'safe'],
             [['phone_from', 'phone_to'], 'string', 'max' => 255],
             [['customer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Customer::class, 'targetAttribute' => ['customer_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
+            [['history_id'], 'exist', 'skipOnError' => true, 'targetClass' => History::class, 'targetAttribute' => ['history_id' => 'id']],
         ];
     }
 
@@ -77,6 +79,7 @@ class Sms extends ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
+            'history_id' => Yii::t('app', 'History ID'),
             'user_id' => Yii::t('app', 'User ID'),
             'customer_id' => Yii::t('app', 'Customer ID'),
             'status' => Yii::t('app', 'Status'),

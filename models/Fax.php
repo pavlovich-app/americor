@@ -10,6 +10,7 @@ use yii\db\ActiveRecord;
  * This is the model class for table "fax".
  *
  * @property integer $id
+ * @property integer $history_id
  * @property string $ins_ts
  * @property integer $user_id
  * @property string $from
@@ -43,11 +44,12 @@ class Fax extends ActiveRecord
     public function rules()
     {
         return [
-            [['type'], 'required'],
+            [['type', 'history_id'], 'required'],
             [['ins_ts'], 'safe'],
-            [['user_id'], 'integer'],
+            [['user_id', 'history_id'], 'integer'],
             [['from', 'to'], 'string'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
+            [['history_id'], 'exist', 'skipOnError' => true, 'targetClass' => History::class, 'targetAttribute' => ['history_id' => 'id']],
         ];
     }
 
@@ -58,6 +60,7 @@ class Fax extends ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
+            'history_id' => Yii::t('app', 'History ID'),
             'ins_ts' => Yii::t('app', 'Created Time'),
             'user_id' => Yii::t('app', 'User ID'),
             'from' => Yii::t('app', 'From'),

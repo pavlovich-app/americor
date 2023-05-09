@@ -41,15 +41,12 @@ class HistorySearch extends History
     {
         $query = History::find();
 
-        // add conditions that should always apply here
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
         $dataProvider->setSort([
             'defaultOrder' => [
-                'ins_ts' => SORT_DESC,
                 'id' => SORT_DESC
             ],
         ]);
@@ -57,8 +54,6 @@ class HistorySearch extends History
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            $query->where('0=1');
             return $dataProvider;
         }
 
@@ -66,6 +61,7 @@ class HistorySearch extends History
         $query->with([
             'customer',
             'user',
+            'eventTable',
             'sms',
             'task',
             'call',

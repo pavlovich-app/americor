@@ -31,7 +31,7 @@ trait ObjectNameTrait
         $class = self::getClassNameByRelation($name);
 
         if (!method_exists($this, $getter) && $class) {
-            return $this->hasOne($class, ['id' => 'object_id']);
+            return $this->hasOne($class, ['history_id' => 'id']);
         }
 
         return parent::getRelation($name, $throwException);

@@ -9,6 +9,8 @@ use yii\helpers\Html;
 
 class DateTime extends Widget
 {
+    const DEFAULT_DATETIME_FORMAT = 'MM/dd/y (hh:mm a)';
+
     public $dateTime;
 
     /**
@@ -20,6 +22,6 @@ class DateTime extends Widget
         return
             Html::tag('i', '', ['class' => "icon glyphicon glyphicon-time"]) . " " .
             Yii::$app->formatter->format($this->dateTime, 'relativeTime') . ' - ' .
-            Yii::$app->formatter->asDatetime($this->dateTime, 'MM/dd/y (hh:mm a)');
+            Yii::$app->formatter->asDatetime($this->dateTime, self::DEFAULT_DATETIME_FORMAT);
     }
 }
