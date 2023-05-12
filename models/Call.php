@@ -10,6 +10,7 @@ use yii\db\ActiveRecord;
  * This is the model class for table "{{%call}}".
  *
  * @property integer $id
+ * @property integer $history_id
  * @property string $ins_ts
  * @property integer $direction
  * @property integer $user_id
@@ -56,11 +57,12 @@ class Call extends ActiveRecord
     {
         return [
             [['ins_ts'], 'safe'],
-            [['direction', 'phone_from', 'phone_to', 'type', 'status', 'viewed'], 'required'],
-            [['direction', 'user_id', 'customer_id', 'type', 'status'], 'integer'],
+            [['direction', 'phone_from', 'phone_to', 'type', 'status', 'viewed', 'history_id'], 'required'],
+            [['direction', 'user_id', 'customer_id', 'type', 'status', 'history_id'], 'integer'],
             [['phone_from', 'phone_to', 'outcome'], 'string', 'max' => 255],
             [['customer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Customer::class, 'targetAttribute' => ['customer_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
+            [['history_id'], 'exist', 'skipOnError' => true, 'targetClass' => History::class, 'targetAttribute' => ['history_id' => 'id']],
         ];
     }
 
@@ -71,6 +73,7 @@ class Call extends ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
+            'history_id' => Yii::t('app', 'History ID'),
             'ins_ts' => Yii::t('app', 'Date'),
             'direction' => Yii::t('app', 'Direction'),
             'directionText' => Yii::t('app', 'Direction'),

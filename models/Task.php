@@ -10,6 +10,7 @@ use yii\db\ActiveRecord;
  * This is the model class for table "{{%task}}".
  *
  * @property integer $id
+ * @property integer $history_id
  * @property integer $user_id
  * @property integer $customer_id
  * @property integer $status
@@ -57,12 +58,13 @@ class Task extends ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'title'], 'required'],
-            [['user_id', 'customer_id', 'status', 'priority'], 'integer'],
+            [['user_id', 'title', 'history_id'], 'required'],
+            [['user_id', 'customer_id', 'status', 'priority', 'history_id'], 'integer'],
             [['text'], 'string'],
             [['title', 'object'], 'string', 'max' => 255],
             [['customer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Customer::class, 'targetAttribute' => ['customer_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
+            [['history_id'], 'exist', 'skipOnError' => true, 'targetClass' => History::class, 'targetAttribute' => ['history_id' => 'id']],
         ];
     }
 
@@ -73,6 +75,7 @@ class Task extends ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
+            'history_id' => Yii::t('app', 'History ID'),
             'user_id' => Yii::t('app', 'User'),
             'customer_id' => Yii::t('app', 'Customer ID'),
             'status' => Yii::t('app', 'Status'),

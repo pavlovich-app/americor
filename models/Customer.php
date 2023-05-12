@@ -12,6 +12,7 @@ use yii\db\ActiveRecord;
  *
  * @property integer $id
  * @property string $name
+ * @property int $status
  */
 class Customer extends ActiveRecord
 {
